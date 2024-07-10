@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('request_id');
+            $table->unsignedBigInteger('log_id');
             $table->integer('status');
             $table->integer('size');
             $table->json('headers');
             
-            $table->foreign('request_id')->references('id')->on('requests');
+            $table->foreign('log_id')->references('id')->on('logs');
         });
     }
 

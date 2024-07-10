@@ -19,11 +19,9 @@ return new class extends Migration
             $table->integer('size');
             $table->json('querystring');
             $table->json('headers');
-            $table->uuid('consumer_id');
-            $table->string('upstream_uri');
-            $table->string('client_ip');
-            $table->integer('started_at');
-            $table->timestamps();
+            $table->unsignedBigInteger('log_id');
+
+            $table->foreign('log_id')->references('id')->on('logs');
         });
     }
 

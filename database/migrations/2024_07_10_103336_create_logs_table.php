@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('latencies', function (Blueprint $table) {
+        Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('log_id');
-            $table->integer('proxy');
-            $table->integer('gateway');
-            $table->integer('request');
-
-            $table->foreign('log_id')->references('id')->on('logs');
+            $table->string('upstream_uri');
+            $table->string('client_ip');
+            $table->uuid('consumer_id');
+            $table->integer('started_at');
+            $table->timestamps();
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('latencies');
+        Schema::dropIfExists('logs');
     }
 };
