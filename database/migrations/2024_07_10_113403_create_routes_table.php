@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('routes', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('log_id');
+            $table->uuid('id');
+            $table->uuid('log_id');
             $table->uuid('route_original_id');//O id que está registrado no json original antes de ser persistido
             $table->string('hosts')->nullable();
             $table->json('methods');

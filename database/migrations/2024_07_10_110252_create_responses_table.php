@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('responses', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('log_id');
+            $table->uuid('id');
+            $table->uuid('log_id');
             $table->integer('status');
             $table->integer('size');
             $table->json('headers');

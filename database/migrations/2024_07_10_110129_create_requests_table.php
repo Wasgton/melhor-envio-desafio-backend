@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('requests', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id');
             $table->string('method');
             $table->string('uri');
             $table->string('url');
             $table->integer('size');
             $table->json('querystring');
             $table->json('headers');
-            $table->unsignedBigInteger('log_id');
+            $table->uuid('log_id');
 
             $table->foreign('log_id')->references('id')->on('logs');
         });
