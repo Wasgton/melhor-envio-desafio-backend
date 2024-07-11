@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Repositories\LogImportRepository;
+use App\Repositories\LogRepository;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -20,7 +20,7 @@ class ImportLogJob implements ShouldQueue
     public $timeout = 900;
     public int $tries = 5;
     public int $maxExceptions = 3;
-    private LogImportRepository|null $logRepository;
+    private LogRepository|null $logRepository;
     private array $batch = [
         'logs' => [],
         'requests' => [],
@@ -38,7 +38,7 @@ class ImportLogJob implements ShouldQueue
         private readonly int $batchSize = 1000
     )
     {
-        $this->logRepository = $logRepository??app(LogImportRepository::class);        
+        $this->logRepository = $logRepository??app(LogRepository::class);        
     }
 
     /**
