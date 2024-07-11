@@ -8,8 +8,7 @@ use Illuminate\Support\Str;
 
 class Log extends Model
 {
-    use HasFactory;
-    
+    use HasFactory;   
     protected $fillable = [
         'id',
         'upstream_uri',
@@ -17,17 +16,17 @@ class Log extends Model
         'consumer_id',
         'started_at',
     ];
+    
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
-                $model->{$model->getKeyName()} = (string) Str::uuid();
+                $model->{$model->getKeyName()} = (string) Str::orderedUuid();
             }
         });
     }
-
     public function request()
     {
         return $this->hasOne(Request::class);
