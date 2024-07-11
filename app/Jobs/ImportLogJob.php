@@ -9,12 +9,18 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ImportLogJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    public $timeout = 900;
+    public int $tries = 5;
+    public int $maxExceptions = 3;
+    private LogImportRepository|null $logRepository;
     private array $batch = [
         'logs' => [],
         'requests' => [],
@@ -23,16 +29,17 @@ class ImportLogJob implements ShouldQueue
         'services' => [],
         'latencies' => [],
     ];
-    
     /**
      * Create a new job instance.
      */
     public function __construct(
         public readonly string $file, 
-        public readonly LogImportRepository $logRepository,
+        $logRepository = null,
         private readonly int $batchSize = 1000
     )
-    {}
+    {
+        $this->logRepository = $logRepository??app(LogImportRepository::class);        
+    }
 
     /**
      * Execute the job.
@@ -48,9 +55,9 @@ class ImportLogJob implements ShouldQueue
                     break;
                 }
                 $this->prepareLogData($logData);
-                if (count($this->batch) >= $this->batchSize) {
+                if (count($this->batch['logs']) >= $this->batchSize) {
                     $this->logRepository->saveBatch($this->batch);
-                    $this->batch = [];
+                    $this->resetBatch();                    
                 }
             }
             if (!empty($this->batch)) {
@@ -64,6 +71,17 @@ class ImportLogJob implements ShouldQueue
             throw $e;
         }        
     }
+
+    public function failed(Throwable $exception): void
+    {
+        Log::error('ImportLogJob failed', ['filePath' => $this->file, 'exception' => $exception->getMessage()]);     
+    }
+    
+    public function backoff(): array
+    {
+        return [10, 30, 60];
+    }
+    
     private function getLine($filePath)
     {
         $handle = Storage::disk('public')->readStream($filePath);
@@ -138,6 +156,18 @@ class ImportLogJob implements ShouldQueue
             'gateway' => $data['latencies']['gateway'],
             'request' => $data['latencies']['request'],
             'log_id' => $logId,
+        ];
+    }
+
+    private function resetBatch(): void
+    {
+        $this->batch = [
+            'logs' => [],
+            'requests' => [],
+            'responses' => [],
+            'routes' => [],
+            'services' => [],
+            'latencies' => [],
         ];
     }
 
