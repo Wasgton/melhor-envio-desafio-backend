@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('log_id');
             $table->integer('status');
             $table->integer('size');
             $table->json('headers');
-            
-            $table->foreign('log_id')->references('id')->on('logs');
+            $table->foreignUuid('log_id')
+                ->index()
+                ->constrained();
         });
     }
 

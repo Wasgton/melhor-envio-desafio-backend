@@ -19,9 +19,9 @@ return new class extends Migration
             $table->integer('size');
             $table->json('querystring');
             $table->json('headers');
-            $table->uuid('log_id');
-
-            $table->foreign('log_id')->references('id')->on('logs');
+            $table->foreignUuid('log_id')
+                ->index()
+                ->constrained();
         });
     }
 

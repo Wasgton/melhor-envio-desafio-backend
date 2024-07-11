@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('service_original_id');
-            $table->uuid('log_id');
             $table->string('name');
             $table->string('host');
             $table->integer('port');
@@ -23,8 +22,9 @@ return new class extends Migration
             $table->integer('read_timeout');
             $table->integer('write_timeout');
             $table->integer('retries');
-
-            $table->foreign('log_id')->references('id')->on('logs');
+            $table->foreignUuid('log_id')
+                ->index()
+                ->constrained();
         });
     }
 

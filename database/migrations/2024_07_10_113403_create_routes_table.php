@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('routes', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->uuid('log_id');
             $table->uuid('route_original_id');//O id que está registrado no json original antes de ser persistido
             $table->string('hosts')->nullable();
             $table->json('methods');
@@ -23,8 +22,9 @@ return new class extends Migration
             $table->integer('regex_priority');
             $table->uuid('service_original_id');
             $table->boolean('strip_path');
-
-            $table->foreign('log_id')->references('id')->on('logs');
+            $table->foreignUuid('log_id')
+                ->index()
+                ->constrained();
         });
     }
 
