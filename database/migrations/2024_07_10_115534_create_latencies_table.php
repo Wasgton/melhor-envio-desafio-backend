@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('latencies', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->uuid('log_id');
             $table->integer('proxy');
             $table->integer('gateway');
