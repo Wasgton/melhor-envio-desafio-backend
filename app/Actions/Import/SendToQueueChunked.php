@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Actions\Import;
 
 use App\Jobs\ImportLogJob;
 use Illuminate\Support\Facades\Storage;
 
-class ImportLogService
+class SendToQueueChunked
 {
     private int $chunkSize = 10 * 1024 * 1024;
     /**
@@ -13,7 +13,7 @@ class ImportLogService
      * @param int $chunkSize
      * @return void
      */
-    public function sendToQueueChunked($filePath, $chunkSize = 0)
+    public function execute($filePath, $chunkSize = 0)
     {
         $this->chunkSize = $chunkSize>0 ? $chunkSize : $this->chunkSize;
         foreach ($this->splitFile($filePath) as $chunkFilePath) {

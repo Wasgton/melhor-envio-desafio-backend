@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Import\SendToQueueChunked;
 use App\Http\Requests\LogImportRequest;
 use App\Services\FileStorageService;
-use App\Services\ImportLogService;
 use Illuminate\Http\Response;
 
-class 
-ImportFileController extends Controller
+class ImportFileController extends Controller
 {
     public function __construct(
         private readonly FileStorageService $fileStorageService,
-        private readonly ImportLogService $importLogService
+        private readonly SendToQueueChunked $sendToQueueChunked
     )
     {}
 
@@ -21,7 +20,7 @@ ImportFileController extends Controller
         $file = $request->file('file');
         try {
             $filePath = $this->fileStorageService->storeTempFile($file);
-            $this->importLogService->sendToQueueChunked($filePath);
+            $this->sendToQueueChunked->execute($filePath);
             return response()->json(['message' => 'Import queued successfully.']);
         } catch (\Exception $e) {
             return response()->json(
