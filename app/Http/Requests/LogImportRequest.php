@@ -17,7 +17,7 @@ class LogImportRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => 'required|file',
+            'file' => 'required|file|mimes:txt,json',
         ];
     }
 
@@ -25,6 +25,8 @@ class LogImportRequest extends FormRequest
     {
         return [
             'file.required' => 'No file uploaded.',
+            'file.mimes' => 'Only txt and json files are allowed.',
+            'file.file' => 'The selected file is not a valid file.',
         ];
     }
  
