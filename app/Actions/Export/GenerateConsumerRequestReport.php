@@ -1,9 +1,6 @@
 <?php
 
-namespace App\Actions;
-
-use App\Repositories\LogRepository;
-use Illuminate\Support\Facades\Storage;
+namespace App\Actions\Export;
 
 class GenerateConsumerRequestReport extends AbstractReportExtractor
 {
@@ -11,7 +8,7 @@ class GenerateConsumerRequestReport extends AbstractReportExtractor
     {
         $consumerReports = $this->logRepository->getConsumerRequests();
         return $this->generateCsv($consumerReports)
-            ->storeCsv('consumer_requests');
+                    ->storeCsv('consumer_requests');
     }    
     
     protected function headers()

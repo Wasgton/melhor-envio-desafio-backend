@@ -5,7 +5,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 
-class FileStorageService
+class FileStorageService 
 {
     private string $tempFilePath = 'temp/json_file.txt';
 

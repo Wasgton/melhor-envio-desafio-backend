@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Export;
 
 use App\Repositories\LogRepository;
 use Illuminate\Support\Facades\Storage;
-use Nette\NotImplementedException;
 
 abstract class AbstractReportExtractor
 {
@@ -31,6 +30,6 @@ abstract class AbstractReportExtractor
     {
         $filePath = "report/{$fileName}_".now()->format('Ymd_His').".csv";
         Storage::disk('public')->put($filePath, $this->data);
-        return "/storage/{$filePath}";
+        return $filePath;
     }
 }

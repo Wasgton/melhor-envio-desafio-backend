@@ -1,9 +1,6 @@
 <?php
 
-namespace App\Actions;
-
-use App\Repositories\LogRepository;
-use Illuminate\Support\Facades\Storage;
+namespace App\Actions\Export;
 
 class GenerateServiceRequestReport extends AbstractReportExtractor
 {

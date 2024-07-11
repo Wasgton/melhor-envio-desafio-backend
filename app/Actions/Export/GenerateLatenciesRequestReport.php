@@ -1,9 +1,6 @@
 <?php
 
-namespace App\Actions;
-
-use App\Repositories\LogRepository;
-use Illuminate\Support\Facades\Storage;
+namespace App\Actions\Export;
 
 class GenerateLatenciesRequestReport extends AbstractReportExtractor
 {
@@ -16,6 +13,11 @@ class GenerateLatenciesRequestReport extends AbstractReportExtractor
     
     protected function headers()
     {
-        return ['consumer_id', 'total_request'];
+        return [
+            'service',
+            'average_request_time',
+            'average_proxy_time',
+            'average_gateway_time'
+        ];
     }
 }
