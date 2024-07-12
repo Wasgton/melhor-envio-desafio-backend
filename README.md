@@ -64,7 +64,7 @@ Para importar o arquivo, foi criada a rota:
 1 - Envie uma requisição POST para a rota acima com o arquivo anexado no parâmetro file.
 Exemplo:
 
-![img.png](img.png)
+![img_2.png](img_2.png)
 
 #### Exportar Relatórios
 Foram criadas três endpoints para gerar e baixar os relatórios em CSV:
