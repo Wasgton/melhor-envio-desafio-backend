@@ -48,9 +48,18 @@ http://localhost
 ``php artisan test``
 
 ### Testes Manuais
+
+### Swagger
+
+- A API está documentada usando swagger e pode ser testada usando a rota: 
+  - `http://localhost/api/v1/documentation`
+- Caso a rota acima apresente qualquer erro, basta executar, dentro do container, o comando: 
+`php artisan l5-swagger:generate`
+
+
 #### Importar Arquivos
 Para importar o arquivo, foi criada a rota:
-``/api/import-file``
+``/api/v1/import-file``
 
 1 - Envie uma requisição POST para a rota acima com o arquivo anexado no parâmetro file.
 Exemplo:
@@ -61,11 +70,11 @@ Exemplo:
 Foram criadas três rotas para gerar e baixar os relatórios em CSV:
 
 - Relatório de requisições por consumidor:
-  - http://localhost/report/consumer
+  - http://localhost/api/v1/report/consumer
 - Relatório de requisições por serviço:
-   - http://localhost/report/service
+   - http://localhost/api/v1/report/service
 - Relatório de tempo médio de request, proxy e gateway por serviço:
-   - http://localhost/report/latency
+   - http://localhost/api/v1/report/latency
 - Além disso, há uma página web com links para baixar os relatórios:
   - http://localhost/
 

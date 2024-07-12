@@ -1,0 +1,183 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API para importação de arquivos de log",
+        "description": "API para importação de arquivos de log e exportação de relatorios em cima dos dados importados",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/import-file": {
+            "post": {
+                "tags": [
+                    "import"
+                ],
+                "summary": "Importa um arquivo de log",
+                "description": "Importa um arquivo de log, e registra na fila de processamento",
+                "operationId": "d59a3b75f66b4ff5ad92d59490580b89",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "description": "Arquivo de log a ser importado",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Import queued successfully."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Failed to import JSON logs."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/report/consumer": {
+            "get": {
+                "tags": [
+                    "export"
+                ],
+                "summary": "Exporta relatório de requisições de consumidores",
+                "description": "Exporta um relatório CSV contendo as requisições de consumidores",
+                "operationId": "22d40f773efb477b2581320b42cdc926",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/octet-stream": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Erro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Failed to export consumer requests."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/report/service": {
+            "get": {
+                "tags": [
+                    "export"
+                ],
+                "summary": "Exporta relatório de requisições de serviços",
+                "description": "Exporta um relatório CSV contendo as requisições de serviços",
+                "operationId": "8b7748a5baa98fb7bf342ba681df894e",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/octet-stream": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Erro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Failed to export service requests."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/report/latency": {
+            "get": {
+                "tags": [
+                    "export"
+                ],
+                "summary": "Exporta relatório de tempo médio por serviço",
+                "description": "Exporta um relatório CSV contendo o tempo médio de latência por serviço",
+                "operationId": "b99ae7fdb5e7271373d0efa5ab99b5f5",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/octet-stream": {}
+                        }
+                    },
+                    "500": {
+                        "description": "Erro",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Failed to export average time per service."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "import",
+            "description": "import"
+        },
+        {
+            "name": "export",
+            "description": "export"
+        }
+    ]
+}
