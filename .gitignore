@@ -19,3 +19,5 @@ yarn-error.log
 /.idea
 /.vscode
 /docker/mysql/files
+/composer.lock
+/supervisord.pid
