@@ -51,4 +51,4 @@ RUN docker-php-ext-install pdo pdo_mysql
 COPY docker/supervisord/supervisord.conf /etc/supervisor/supervisord.conf 
 
 USER $user
-CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
+CMD ["sh", "./start.sh"]
