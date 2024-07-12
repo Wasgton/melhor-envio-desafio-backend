@@ -27,7 +27,7 @@ cd melhor-envio-desafio-backend
 
 ### 3. Acessar a Aplicação
    Após a execução do comando acima, a aplicação estará disponível no endereço:
-http://localhost
+http://localhost:8002/
 
 ##  Funcionalidades
 ### 1. Importação de Logs JSON
@@ -52,7 +52,7 @@ http://localhost
 ### Swagger
 
 - A API está documentada usando swagger e pode ser testada usando a rota: 
-  - `http://localhost/api/v1/documentation`
+  - `http://localhost:8002/api/v1/documentation`
 - Caso a rota acima apresente qualquer erro, basta executar, dentro do container, o comando: 
 `php artisan l5-swagger:generate`
 
@@ -64,21 +64,21 @@ Para importar o arquivo, foi criada a rota:
 1 - Envie uma requisição POST para a rota acima com o arquivo anexado no parâmetro file.
 Exemplo:
 
-![img_2.png](img_2.png)
+![img.png](img.png)![img_2.png](img_2.png)
 
 #### Exportar Relatórios
 Foram criadas três endpoints para gerar e baixar os relatórios em CSV:
 
 - Relatório de requisições por consumidor:
-  - http://localhost/api/v1/report/consumer
+  - http://localhost:8002/api/v1/report/consumer
 - Relatório de requisições por serviço:
-   - http://localhost/api/v1/report/service
+   - http://localhost:8002/api/v1/report/service
 - Relatório de tempo médio de request, proxy e gateway por serviço:
-   - http://localhost/api/v1/report/latency
+   - http://localhost:8002/api/v1/report/latency
 
 Navegador: 
 - Além disso, há uma página web com links para baixar os relatórios:
-  - http://localhost/
+  - http://localhost:8002/
 
 ![img_1.png](img_1.png)
 
