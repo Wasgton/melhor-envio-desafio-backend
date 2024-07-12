@@ -40,7 +40,7 @@
 </head>
 <body>
 <div class="form-container">
-    <ul style="list-style-type:none">
+    <ul style="list-style-type:decimal">
         <li><a href="{{route('report.consumer')}}" style="text-decoration: none">Requisições por consumidor</a></li>
         <li><a href="{{route('report.service')}}" style="text-decoration: none">Requisições por serviço</a></li>
         <li><a href="{{route('report.latency')}}" style="text-decoration: none">Tempo médio de request , proxy e gateway por serviço</a></li>
