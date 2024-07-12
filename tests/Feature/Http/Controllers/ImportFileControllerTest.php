@@ -13,7 +13,7 @@ class ImportFileControllerTest extends TestCase
 {
     public function test_should_return_error_if_no_file_is_provided()
     {        
-        $response = $this->json('POST', 'api/import-file', []);
+        $response = $this->json('POST', 'api/v1/import-file', []);
         $response->assertJsonValidationErrorFor('file');
     }
 
@@ -21,7 +21,7 @@ class ImportFileControllerTest extends TestCase
     {
         Queue::fake();
         $file = UploadedFile::fake()->create('test.txt', 5 * 1024);
-        $response = $this->json('POST', '/api/import-file', [
+        $response = $this->json('POST', '/api/v1/import-file', [
             'file' => $file,
         ]);
         $response->assertStatus(200)
@@ -33,7 +33,7 @@ class ImportFileControllerTest extends TestCase
     {
         Queue::fake();
         $file = UploadedFile::fake()->create('test.txt', 5 * 1024);
-        $response = $this->json('POST', '/api/import-file', [
+        $response = $this->json('POST', '/api/v1/import-file', [
             'file' => $file,
         ]);
         $response->assertStatus(200)

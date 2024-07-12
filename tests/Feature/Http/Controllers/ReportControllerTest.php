@@ -13,21 +13,21 @@ class ReportControllerTest extends TestCase
 {
     public function test_should_export_consumer_requests_success()
     {      
-        $response = $this->get('report/consumer');
+        $response = $this->get('api/v1/report/consumer');
         $response->assertDownload();
         $response->assertStatus(Response::HTTP_OK);
     }
 
     public function test_should_export_service_requests_success()
     {
-        $response = $this->get('/report/service');
+        $response = $this->get('api/v1/report/service');
         $response->assertStatus(Response::HTTP_OK);
         $response->assertDownload();
     }
 
     public function test_should_export_average_time_per_service_success()
     {
-        $response = $this->get('/report/latency');
+        $response = $this->get('api/v1/report/latency');
         $response->assertStatus(Response::HTTP_OK);
         $response->assertDownload();
     }
@@ -39,7 +39,7 @@ class ReportControllerTest extends TestCase
                 ->once()
                 ->andThrow(new \Exception('Error generating report'));
         });
-        $response = $this->get('/report/consumer');
+        $response = $this->get('api/v1/report/consumer');
         $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
         $response->assertJson(['error' => 'Failed to export consumer requests.']);
     }
@@ -51,7 +51,7 @@ class ReportControllerTest extends TestCase
                 ->once()
                 ->andThrow(new \Exception('Error generating report'));
         });
-        $response = $this->get('/report/service');
+        $response = $this->get('api/v1/report/service');
         $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
         $response->assertJson(['error' => 'Failed to export service requests.']);
     }
@@ -63,7 +63,7 @@ class ReportControllerTest extends TestCase
                 ->once()
                 ->andThrow(new \Exception('Error generating report'));
         });
-        $response = $this->get('/report/latency');
+        $response = $this->get('api/v1/report/latency');
         $response->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
         $response->assertJson(['error' => 'Failed to export average time per service.']);
     }

@@ -6,6 +6,7 @@ use App\Actions\Import\SendToQueueChunked;
 use App\Http\Requests\LogImportRequest;
 use App\Services\FileStorageService;
 use Illuminate\Http\Response;
+use OpenApi\Annotations as OA;
 
 class ImportFileController extends Controller
 {
@@ -15,6 +16,50 @@ class ImportFileController extends Controller
     )
     {}
 
+    /**
+     *  @OA\Post(
+     *      path="/api/v1/import-file",
+     *      summary="Importa um arquivo de log",
+     *      description="Importa um arquivo de log, e registra na fila de processamento",
+     *      tags={"import"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="multipart/form-data",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="file",
+     *                      description="Arquivo de log a ser importado",
+     *                      type="string",
+     *                      format="binary"
+     *                  )
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\JsonContent(
+     *              @OA\Property(
+     *                  property="message",
+     *                  type="string",
+     *                  example="Import queued successfully."
+     *              )
+     *          )
+     *      ),
+     *      @OA\Response(
+     *           response=500,
+     *           description="Erro",
+     *           @OA\JsonContent(
+     *               @OA\Property(
+     *                   property="error",
+     *                   type="string",
+     *                   example="Failed to import JSON logs."
+     *               )
+     *           )
+     *       ),
+     *  )
+     */
     public function __invoke(LogImportRequest $request)
     {
         $file = $request->file('file');

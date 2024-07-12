@@ -7,9 +7,36 @@ use App\Actions\Export\GenerateLatenciesRequestReport;
 use App\Actions\Export\GenerateServiceRequestReport;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Storage;
+use OpenApi\Annotations as OA;
 
 class ReportController extends Controller
 {
+    /**
+     * @OA\Get(
+     *      path="/report/consumer",
+     *      summary="Exporta relatório de requisições de consumidores",
+     *      description="Exporta um relatório CSV contendo as requisições de consumidores",
+     *      tags={"export"},
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/octet-stream"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *           response=500,
+     *           description="Erro",
+     *           @OA\JsonContent(
+     *               @OA\Property(
+     *                   property="error",
+     *                   type="string",
+     *                   example="Failed to export consumer requests."
+     *               )
+     *           )
+     *       ),
+     *  )
+     */
     public function exportConsumerRequests(GenerateConsumerRequestReport $generateConsumerRequestReport)
     {
         try {
@@ -20,6 +47,32 @@ class ReportController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *      path="/report/service",
+     *      summary="Exporta relatório de requisições de serviços",
+     *      description="Exporta um relatório CSV contendo as requisições de serviços",
+     *      tags={"export"},
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/octet-stream"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *           response=500,
+     *           description="Erro",
+     *           @OA\JsonContent(
+     *               @OA\Property(
+     *                   property="error",
+     *                   type="string",
+     *                   example="Failed to export service requests."
+     *               )
+     *           )
+     *       ),
+     *  )
+     */
     public function exportServiceRequests(GenerateServiceRequestReport $generateServiceRequestReport)
     {
         try {
@@ -30,6 +83,32 @@ class ReportController extends Controller
         }
     }
 
+    /**
+     * @OA\Get(
+     *      path="/report/latency",
+     *      summary="Exporta relatório de tempo médio por serviço",
+     *      description="Exporta um relatório CSV contendo o tempo médio de latência por serviço",
+     *      tags={"export"},
+     *      @OA\Response(
+     *          response=200,
+     *          description="OK",
+     *          @OA\MediaType(
+     *              mediaType="application/octet-stream"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *           response=500,
+     *           description="Erro",
+     *           @OA\JsonContent(
+     *               @OA\Property(
+     *                   property="error",
+     *                   type="string",
+     *                   example="Failed to export average time per service."
+     *               )
+     *           )
+     *       ),
+     *  )
+     */
     public function exportAverageTimePerService(GenerateLatenciesRequestReport $generateLatenciesRequestReport)
     {
         try {
