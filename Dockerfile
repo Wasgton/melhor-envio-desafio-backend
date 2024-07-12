@@ -6,7 +6,7 @@ ARG user
 ARG uid
 
 RUN useradd -G www-data,root -u $uid -d /home/$user $user
-RUN mkdir -p /home/$user && chown -R $user:$uid /home/$user && chown -R $user:$uid /var/www/html//
+RUN mkdir -p /home/$user && chown -R $user:$uid /home/$user && chown -R $user:$uid /var/www/html/
 
 COPY --chown=$user:$uid . /var/www/html/
 
@@ -27,7 +27,11 @@ RUN apt-get install -y \
     libfreetype6-dev \
     g++ \
     nano \
-    cron
+    cron \
+    supervisor
+
+RUN mkdir -p /var/log/supervisor
+RUN chown -R $user:$uid /var/log/supervisor
 
 RUN echo upload_max_filesize = 200M >> /usr/local/etc/php/php.ini
 RUN echo post_max_size = 200M >> /usr/local/etc/php/php.ini
@@ -44,5 +48,7 @@ RUN curl -sS https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/bin/composer
 RUN docker-php-ext-install pdo pdo_mysql
 
+COPY docker/supervisord/supervisord.conf /etc/supervisor/supervisord.conf 
+
 USER $user
-CMD ["php-fpm"]
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
