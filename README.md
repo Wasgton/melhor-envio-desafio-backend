@@ -56,7 +56,7 @@ http://localhost
 - Caso a rota acima apresente qualquer erro, basta executar, dentro do container, o comando: 
 `php artisan l5-swagger:generate`
 
-
+### API
 #### Importar Arquivos
 Para importar o arquivo, foi criada a rota:
 ``/api/v1/import-file``
@@ -67,7 +67,7 @@ Exemplo:
 ![img.png](img.png)
 
 #### Exportar Relatórios
-Foram criadas três rotas para gerar e baixar os relatórios em CSV:
+Foram criadas três endpoints para gerar e baixar os relatórios em CSV:
 
 - Relatório de requisições por consumidor:
   - http://localhost/api/v1/report/consumer
@@ -75,6 +75,8 @@ Foram criadas três rotas para gerar e baixar os relatórios em CSV:
    - http://localhost/api/v1/report/service
 - Relatório de tempo médio de request, proxy e gateway por serviço:
    - http://localhost/api/v1/report/latency
+
+Navegador: 
 - Além disso, há uma página web com links para baixar os relatórios:
   - http://localhost/
 
