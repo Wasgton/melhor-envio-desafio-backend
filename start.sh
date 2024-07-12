@@ -1,6 +1,6 @@
 #!/bin/bash
 
-composer install
-composer run-script post-root-package-install
-composer run-script post-create-project-cmd
+composer install -n
+composer run-script post-root-package-install -n 
+composer run-script post-create-project-cmd -n
 /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
